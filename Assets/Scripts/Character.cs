@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-
+    Animator animator;
+    SpriteRenderer spriteRenderer;
     public int[] xCoordinatesPatrolPoints = new int[] { 0, 5, 7, -5, -7 };
     public float speed = 1.0f;
     Vector3 goal;
@@ -14,6 +15,8 @@ public class Character : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(GetNewPosition), 0.1f, 10);
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -23,11 +26,8 @@ public class Character : MonoBehaviour
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, goal, step);
 
-        if (!IsMoving)
-        {
-            StartCoroutine(nameof(CheckIfIdle))
-        }
-
+        CheckIfIdle();
+        animator.SetBool("IsMoving", IsMoving);
         lastPosition = transform.position.x;
     }
 
@@ -38,14 +38,26 @@ public class Character : MonoBehaviour
 
     }
     
-    IEnumerator CheckIfIdle()
+    void CheckIfIdle()
     {
         float counter = 0;
 
         if (!IsMoving)
         {
-            counter += Time.deltaTime;
+                animator.SetBool("IsIdle", true);
+                animator.SetBool("IsMoving", false);
+            
+
         }
+        else
+        {
+            spriteRenderer.flipX = transform.position.x - lastPosition > 0;
+            animator.SetBool("IsIdle", false);
+            animator.SetBool("IsMoving", true);
+        }
+
+       
+
     }
 
 
