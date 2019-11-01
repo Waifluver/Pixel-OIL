@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using WebSocketSharp;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -22,7 +23,6 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, goal, step);
 
@@ -36,6 +36,7 @@ public class Character : MonoBehaviour
         int d = Random.Range(0, xCoordinatesPatrolPoints.Length - 1);
         goal = new Vector3(xCoordinatesPatrolPoints[d], transform.position.y, transform.position.z);
 
+      
     }
     
     void CheckIfIdle()
@@ -56,7 +57,6 @@ public class Character : MonoBehaviour
             animator.SetBool("IsMoving", true);
         }
 
-       
 
     }
 
