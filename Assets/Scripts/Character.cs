@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating(nameof(GetNewPosition), 0.1f, 10);
+        InvokeRepeating(nameof(GetNewPosition), 0.1f, 5);
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
